@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Knowledge Proofs — Interactive Learning Lab</title>
+    <meta name="description" content="Learn Zero Knowledge Proofs interactively with hands-on demos, visual explanations, and step-by-step cryptographic protocols.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">🔐</span>
+            <span class="nav-title">ZK Lab</span>
+        </div>
+        <div class="nav-links">
+            <a href="#hero" class="nav-link active">Home</a>
+            <a href="#concepts" class="nav-link">Concepts</a>
+            <a href="#demo-color" class="nav-link">Color Proof</a>
+            <a href="#demo-hash" class="nav-link">Hash Proof</a>
+            <a href="#demo-schnorr" class="nav-link">Schnorr</a>
+            <a href="#playground" class="nav-link">Playground</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Interactive Learning Lab</div>
+            <h1>Zero Knowledge<br><span class="gradient-text">Proofs</span></h1>
+            <p class="hero-subtitle">Prove you know something — without revealing what you know.<br>Learn the magic of modern cryptography through interactive demos.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Interactive Demos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Core Properties</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Possibilities</span>
+                </div>
+            </div>
+            <a href="#concepts" class="cta-button" id="start-learning-btn">
+                Start Learning
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        <div class="hero-visual">
+            <div class="orbit-system">
+                <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+                <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
+                <div class="orbit orbit-3"><div class="orbit-dot"></div></div>
+                <div class="center-icon">🛡️</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Concepts Section -->
+    <section id="concepts">
+        <div class="section-header">
+            <span class="section-tag">Foundation</span>
+            <h2>The Three Pillars of ZKP</h2>
+            <p>Every zero knowledge proof must satisfy these three properties</p>
+        </div>
+        <div class="concepts-grid">
+            <div class="concept-card" id="concept-completeness">
+                <div class="concept-icon">✅</div>
+                <h3>Completeness</h3>
+                <p>If the statement is <strong>true</strong>, an honest prover can <strong>always</strong> convince an honest verifier.</p>
+                <div class="concept-example">
+                    <span class="example-label">Example</span>
+                    If you actually know the password, you'll always be able to prove it.
+                </div>
+            </div>
+            <div class="concept-card" id="concept-soundness">
+                <div class="concept-icon">🛑</div>
+                <h3>Soundness</h3>
+                <p>If the statement is <strong>false</strong>, no cheating prover can convince the verifier (except with <em>tiny</em> probability).</p>
+                <div class="concept-example">
+                    <span class="example-label">Example</span>
+                    If you don't know the password, you can't fake a proof — you'd need astronomical luck.
+                </div>
+            </div>
+            <div class="concept-card" id="concept-zk">
+                <div class="concept-icon">🔮</div>
+                <h3>Zero-Knowledge</h3>
+                <p>The verifier learns <strong>absolutely nothing</strong> beyond the fact that the statement is true.</p>
+                <div class="concept-example">
+                    <span class="example-label">Example</span>
+                    The verifier knows you have the password, but can't figure out what it is.
+                </div>
+            </div>
+        </div>
+
+        <!-- Ali Baba Cave Analogy -->
+        <div class="cave-section">
+            <div class="section-header">
+                <span class="section-tag">Classic Analogy</span>
+                <h2>Ali Baba's Cave</h2>
+                <p>The most famous way to understand ZKPs</p>
+            </div>
+            <div class="cave-demo" id="cave-demo">
+                <div class="cave-visual">
+                    <svg viewBox="0 0 400 300" class="cave-svg">
+                        <!-- Cave outline -->
+                        <path d="M200 30 L200 100" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="5,5"/>
+                        <path d="M200 100 Q120 100 120 180 Q120 260 200 260" stroke="var(--accent-blue)" stroke-width="3" fill="none" id="cave-path-left"/>
+                        <path d="M200 100 Q280 100 280 180 Q280 260 200 260" stroke="var(--accent-purple)" stroke-width="3" fill="none" id="cave-path-right"/>
+                        <!-- Door -->
+                        <rect x="185" y="250" width="30" height="20" rx="3" fill="var(--accent-gold)" opacity="0.8" id="cave-door"/>
+                        <text x="200" y="264" text-anchor="middle" fill="var(--bg-primary)" font-size="10" font-weight="bold">🔒</text>
+                        <!-- Labels -->
+                        <text x="80" y="180" fill="var(--accent-blue)" font-size="14" font-weight="600">Left</text>
+                        <text x="300" y="180" fill="var(--accent-purple)" font-size="14" font-weight="600">Right</text>
+                        <text x="200" y="20" fill="var(--text-muted)" font-size="12" text-anchor="middle">Entrance</text>
+                        <!-- Peggy -->
+                        <circle cx="200" cy="50" r="15" fill="var(--accent-pink)" id="peggy-dot" class="peggy-marker"/>
+                        <text x="200" y="55" text-anchor="middle" fill="white" font-size="12" id="peggy-label">P</text>
+                        <!-- Victor -->
+                        <circle cx="350" cy="50" r="15" fill="var(--accent-green)" id="victor-dot"/>
+                        <text x="350" y="55" text-anchor="middle" fill="white" font-size="12">V</text>
+                        <text x="350" y="75" text-anchor="middle" fill="var(--text-muted)" font-size="10">Victor</text>
+                        <text x="200" y="85" text-anchor="middle" fill="var(--text-muted)" font-size="10" id="peggy-name">Peggy</text>
+                    </svg>
+                </div>
+                <div class="cave-controls">
+                    <div class="cave-log" id="cave-log">
+                        <div class="log-entry">Click "Start Protocol" to begin the demonstration...</div>
+                    </div>
+                    <div class="cave-stats">
+                        <div class="cave-stat">
+                            <span class="cave-stat-label">Round</span>
+                            <span class="cave-stat-value" id="cave-round">0</span>
+                        </div>
+                        <div class="cave-stat">
+                            <span class="cave-stat-label">Success</span>
+                            <span class="cave-stat-value" id="cave-success">0</span>
+                        </div>
+                        <div class="cave-stat">
+                            <span class="cave-stat-label">Confidence</span>
+                            <span class="cave-stat-value" id="cave-confidence">0%</span>
+                        </div>
+                    </div>
+                    <div class="cave-buttons">
+                        <button class="btn btn-primary" id="cave-start-btn" onclick="startCaveProtocol()">▶ Start Protocol</button>
+                        <button class="btn btn-secondary" id="cave-reset-btn" onclick="resetCave()">↻ Reset</button>
+                    </div>
+                    <label class="cave-cheat-toggle">
+                        <input type="checkbox" id="cave-cheat" onchange="toggleCaveCheat()">
+                        <span>Peggy is lying (doesn't know the secret)</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo 1: Color Proof -->
+    <section id="demo-color">
+        <div class="section-header">
+            <span class="section-tag">Demo 1</span>
+            <h2>The Color Blind Verifier</h2>
+            <p>Prove you can distinguish two colors — without telling the verifier which is which</p>
+        </div>
+        <div class="demo-container">
+            <div class="demo-explanation">
+                <div class="explanation-card">
+                    <h3>🎨 How It Works</h3>
+                    <ol>
+                        <li>You (Prover) see two balls — one <strong style="color: var(--accent-pink)">red</strong> and one <strong style="color: var(--accent-green)">green</strong></li>
+                        <li>The Verifier is color-blind — they look identical to them</li>
+                        <li>The Verifier hides the balls behind their back</li>
+                        <li>They <em>may or may not</em> swap them, then show you</li>
+                        <li>You must say whether they swapped or not</li>
+                        <li>If you can do this many times, you've proven you see colors!</li>
+                    </ol>
+                    <div class="info-box">
+                        <strong>Zero Knowledge:</strong> The verifier never learns which ball is red and which is green — only that you can tell them apart.
+                    </div>
+                </div>
+            </div>
+            <div class="demo-interactive">
+                <div class="color-demo-area">
+                    <div class="balls-display" id="balls-display">
+                        <div class="ball ball-left" id="ball-left">
+                            <span class="ball-label">Ball A</span>
+                        </div>
+                        <div class="ball ball-right" id="ball-right">
+                            <span class="ball-label">Ball B</span>
+                        </div>
+                    </div>
+                    <div class="color-status" id="color-status">
+                        <p>Press "New Round" — the verifier will hide the balls and maybe swap them.</p>
+                    </div>
+                    <div class="color-answer-buttons" id="color-answers" style="display:none;">
+                        <button class="btn btn-primary" onclick="answerColor(false)" id="color-no-swap-btn">🔄 Not Swapped</button>
+                        <button class="btn btn-accent" onclick="answerColor(true)" id="color-swap-btn">🔀 Swapped!</button>
+                    </div>
+                    <div class="demo-stats-row">
+                        <div class="demo-stat">
+                            <span>Rounds</span>
+                            <strong id="color-rounds">0</strong>
+                        </div>
+                        <div class="demo-stat">
+                            <span>Correct</span>
+                            <strong id="color-correct">0</strong>
+                        </div>
+                        <div class="demo-stat">
+                            <span>Confidence</span>
+                            <strong id="color-confidence">0%</strong>
+                        </div>
+                    </div>
+                    <div class="demo-controls">
+                        <button class="btn btn-primary" id="color-new-round-btn" onclick="newColorRound()">🎲 New Round</button>
+                        <button class="btn btn-secondary" onclick="resetColorDemo()">↻ Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo 2: Hash Commitment Proof -->
+    <section id="demo-hash">
+        <div class="section-header">
+            <span class="section-tag">Demo 2</span>
+            <h2>Hash Commitment Proof</h2>
+            <p>Prove you know a secret number without revealing it — using cryptographic hashes</p>
+        </div>
+        <div class="demo-container">
+            <div class="demo-explanation">
+                <div class="explanation-card">
+                    <h3>🔢 How It Works</h3>
+                    <ol>
+                        <li>You choose a <strong>secret number</strong></li>
+                        <li>You compute its <strong>SHA-256 hash</strong> — a unique fingerprint</li>
+                        <li>You send the hash to the verifier (this is your <em>commitment</em>)</li>
+                        <li>The verifier challenges: "Prove you know a number with this hash"</li>
+                        <li>You reveal the number — the verifier hashes it and compares</li>
+                    </ol>
+                    <div class="info-box">
+                        <strong>Key Insight:</strong> SHA-256 is a one-way function. Given the hash, nobody can figure out your original number. But given the number, anyone can verify the hash matches.
+                    </div>
+                </div>
+            </div>
+            <div class="demo-interactive">
+                <div class="hash-demo-area">
+                    <div class="hash-step" id="hash-step-1">
+                        <h4>Step 1: Choose Your Secret</h4>
+                        <div class="input-group">
+                            <input type="text" id="secret-input" placeholder="Enter a secret number or word..." class="demo-input">
+                            <button class="btn btn-primary" onclick="computeHash()" id="compute-hash-btn">🔒 Commit</button>
+                        </div>
+                    </div>
+                    <div class="hash-step hidden" id="hash-step-2">
+                        <h4>Step 2: Your Commitment (sent to Verifier)</h4>
+                        <div class="hash-display">
+                            <span class="hash-label">SHA-256 Hash:</span>
+                            <code id="hash-output" class="hash-value"></code>
+                        </div>
+                        <div class="hash-visual">
+                            <div class="hash-arrow">
+                                <span class="hash-box secret-box">???</span>
+                                <span class="arrow">→ SHA-256 →</span>
+                                <span class="hash-box hash-box-result" id="hash-mini"></span>
+                            </div>
+                        </div>
+                        <p class="hash-note">The verifier now has your hash, but cannot determine your secret from it.</p>
+                        <button class="btn btn-accent" onclick="startVerification()" id="start-verify-btn">📋 Start Verification</button>
+                    </div>
+                    <div class="hash-step hidden" id="hash-step-3">
+                        <h4>Step 3: Verification Challenge</h4>
+                        <p>The verifier challenges: <em>"Prove you know the value that produces this hash."</em></p>
+                        <div class="hash-display">
+                            <span class="hash-label">Expected Hash:</span>
+                            <code id="expected-hash" class="hash-value"></code>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="verify-input" placeholder="Enter the secret to prove..." class="demo-input">
+                            <button class="btn btn-primary" onclick="verifyHash()" id="verify-hash-btn">✓ Verify</button>
+                        </div>
+                        <div class="verify-result hidden" id="verify-result"></div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="resetHashDemo()" style="margin-top: 1rem;">↻ Reset Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo 3: Simplified Schnorr Protocol -->
+    <section id="demo-schnorr">
+        <div class="section-header">
+            <span class="section-tag">Demo 3</span>
+            <h2>Schnorr Identification Protocol</h2>
+            <p>A real cryptographic ZKP — prove you know a secret key using modular arithmetic</p>
+        </div>
+        <div class="demo-container demo-container-full">
+            <div class="demo-explanation">
+                <div class="explanation-card">
+                    <h3>🔐 The Schnorr Protocol</h3>
+                    <p>This is one of the most fundamental ZKP protocols in cryptography.</p>
+                    <div class="protocol-steps">
+                        <div class="protocol-step">
+                            <span class="step-num">1</span>
+                            <div>
+                                <strong>Setup:</strong> Public parameters: prime <code>p</code>, generator <code>g</code>. Secret key: <code>x</code>. Public key: <code>y = g^x mod p</code>
+                            </div>
+                        </div>
+                        <div class="protocol-step">
+                            <span class="step-num">2</span>
+                            <div>
+                                <strong>Commitment:</strong> Prover picks random <code>r</code>, sends <code>t = g^r mod p</code>
+                            </div>
+                        </div>
+                        <div class="protocol-step">
+                            <span class="step-num">3</span>
+                            <div>
+                                <strong>Challenge:</strong> Verifier sends random challenge <code>c</code>
+                            </div>
+                        </div>
+                        <div class="protocol-step">
+                            <span class="step-num">4</span>
+                            <div>
+                                <strong>Response:</strong> Prover computes <code>s = r + c·x mod (p-1)</code>
+                            </div>
+                        </div>
+                        <div class="protocol-step">
+                            <span class="step-num">5</span>
+                            <div>
+                                <strong>Verify:</strong> Check that <code>g^s ≡ t · y^c (mod p)</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <strong>Why is this Zero-Knowledge?</strong> The verifier sees (t, c, s) but can't extract x because r is random and unknown. Any (t, c, s) triple could have been generated without knowing x!
+                    </div>
+                </div>
+            </div>
+            <div class="demo-interactive">
+                <div class="schnorr-demo">
+                    <div class="schnorr-params">
+                        <h4>Public Parameters</h4>
+                        <div class="params-grid">
+                            <div class="param">
+                                <span class="param-label">Prime (p)</span>
+                                <span class="param-value" id="schnorr-p">23</span>
+                            </div>
+                            <div class="param">
+                                <span class="param-label">Generator (g)</span>
+                                <span class="param-value" id="schnorr-g">5</span>
+                            </div>
+                            <div class="param">
+                                <span class="param-label">Public Key (y = g^x mod p)</span>
+                                <span class="param-value" id="schnorr-y">?</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schnorr-input">
+                        <h4>Choose Your Secret Key</h4>
+                        <div class="input-group">
+                            <input type="number" id="schnorr-secret" placeholder="Enter secret key x (1 to 21)" min="1" max="21" class="demo-input">
+                            <button class="btn btn-primary" onclick="schnorrSetup()" id="schnorr-setup-btn">🔑 Set Key</button>
+                        </div>
+                    </div>
+
+                    <div class="schnorr-protocol hidden" id="schnorr-protocol">
+                        <div class="protocol-timeline">
+                            <div class="timeline-item" id="schnorr-step-1">
+                                <div class="timeline-marker">1</div>
+                                <div class="timeline-content">
+                                    <strong>Commitment</strong>
+                                    <div class="timeline-details">
+                                        <span>Random r = <code id="schnorr-r">?</code></span>
+                                        <span>t = g^r mod p = <code id="schnorr-t">?</code></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="schnorr-step-2">
+                                <div class="timeline-marker">2</div>
+                                <div class="timeline-content">
+                                    <strong>Challenge</strong>
+                                    <div class="timeline-details">
+                                        <span>Verifier's challenge c = <code id="schnorr-c">?</code></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="schnorr-step-3">
+                                <div class="timeline-marker">3</div>
+                                <div class="timeline-content">
+                                    <strong>Response</strong>
+                                    <div class="timeline-details">
+                                        <span>s = r + c·x mod (p-1) = <code id="schnorr-s">?</code></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="schnorr-step-4">
+                                <div class="timeline-marker">4</div>
+                                <div class="timeline-content">
+                                    <strong>Verification</strong>
+                                    <div class="timeline-details">
+                                        <span>g^s mod p = <code id="schnorr-lhs">?</code></span>
+                                        <span>t · y^c mod p = <code id="schnorr-rhs">?</code></span>
+                                        <span class="verify-badge" id="schnorr-verify-badge"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="schnorr-controls">
+                            <button class="btn btn-primary" onclick="runSchnorrRound()" id="schnorr-run-btn">▶ Run Round</button>
+                            <button class="btn btn-secondary" onclick="resetSchnorr()">↻ Reset</button>
+                        </div>
+                        <div class="schnorr-log" id="schnorr-log"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo 4: Modular Arithmetic Playground -->
+    <section id="playground">
+        <div class="section-header">
+            <span class="section-tag">Playground</span>
+            <h2>Modular Arithmetic Explorer</h2>
+            <p>Build intuition for the math behind ZKPs</p>
+        </div>
+        <div class="playground-grid">
+            <!-- Basic Mod Calculator -->
+            <div class="playground-card" id="mod-calc-card">
+                <h3>🧮 Mod Calculator</h3>
+                <p>Compute a mod n — the remainder after division</p>
+                <div class="calc-inputs">
+                    <input type="number" id="mod-a" placeholder="a" class="demo-input small">
+                    <span class="calc-op">mod</span>
+                    <input type="number" id="mod-n" placeholder="n" class="demo-input small">
+                    <button class="btn btn-primary btn-small" onclick="calcMod()" id="calc-mod-btn">=</button>
+                    <span class="calc-result" id="mod-result">?</span>
+                </div>
+                <div class="mod-visual" id="mod-visual"></div>
+            </div>
+
+            <!-- Power Mod Calculator -->
+            <div class="playground-card" id="power-mod-card">
+                <h3>⚡ Power Mod</h3>
+                <p>Compute g^x mod p — the core operation in ZKPs</p>
+                <div class="calc-inputs">
+                    <input type="number" id="pow-g" placeholder="g" class="demo-input small">
+                    <span class="calc-op">^</span>
+                    <input type="number" id="pow-x" placeholder="x" class="demo-input small">
+                    <span class="calc-op">mod</span>
+                    <input type="number" id="pow-p" placeholder="p" class="demo-input small">
+                    <button class="btn btn-primary btn-small" onclick="calcPowerMod()" id="calc-pow-btn">=</button>
+                    <span class="calc-result" id="pow-result">?</span>
+                </div>
+            </div>
+
+            <!-- Generator Explorer -->
+            <div class="playground-card wide" id="generator-card">
+                <h3>🔄 Generator Explorer</h3>
+                <p>See how a generator creates all elements of a group: g¹, g², g³, ... mod p</p>
+                <div class="calc-inputs">
+                    <label>Generator g:</label>
+                    <input type="number" id="gen-g" value="5" class="demo-input small">
+                    <label>Prime p:</label>
+                    <input type="number" id="gen-p" value="23" class="demo-input small">
+                    <button class="btn btn-primary btn-small" onclick="exploreGenerator()" id="explore-gen-btn">Generate</button>
+                </div>
+                <div class="generator-output" id="generator-output"></div>
+            </div>
+
+            <!-- Discrete Log Challenge -->
+            <div class="playground-card wide" id="dlog-card">
+                <h3>🧩 Discrete Log Challenge</h3>
+                <p>Given g, p, and y = g^x mod p — can you find x? This is the hard problem that makes ZKPs secure!</p>
+                <div class="dlog-challenge" id="dlog-challenge">
+                    <button class="btn btn-accent" onclick="newDlogChallenge()" id="new-dlog-btn">🎲 New Challenge</button>
+                </div>
+                <div class="dlog-params hidden" id="dlog-params">
+                    <div class="params-grid">
+                        <div class="param"><span class="param-label">g</span><span class="param-value" id="dlog-g">?</span></div>
+                        <div class="param"><span class="param-label">p</span><span class="param-value" id="dlog-p">?</span></div>
+                        <div class="param"><span class="param-label">y = g^? mod p</span><span class="param-value" id="dlog-y">?</span></div>
+                    </div>
+                    <div class="input-group" style="margin-top:1rem;">
+                        <input type="number" id="dlog-guess" placeholder="What is x?" class="demo-input">
+                        <button class="btn btn-primary" onclick="checkDlog()" id="check-dlog-btn">Check</button>
+                    </div>
+                    <div class="dlog-result hidden" id="dlog-result"></div>
+                    <div class="dlog-hint hidden" id="dlog-hint"></div>
+                    <button class="btn btn-secondary btn-small" onclick="showDlogHint()" style="margin-top:0.5rem;" id="dlog-hint-btn">💡 Hint</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>🔐 ZK Learning Lab — Built for hands-on cryptography education</p>
+            <p class="footer-note">All computations run locally in your browser. No data is sent anywhere.</p>
+        </div>
+    </footer>
+
+    <script src="crypto.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
